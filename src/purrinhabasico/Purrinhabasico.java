@@ -6,6 +6,9 @@
 
 package purrinhabasico;
 
+import Cliente.Cliente;
+import Servidor.Servico;
+
 /**
  *
  * @author Voidk
@@ -15,11 +18,9 @@ public class Purrinhabasico {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        jogo j= new jogo(2);
-        do
-        j.rodada();
-        while(j.temVencedor());
+    public static void main(String[] args) throws Exception {
+        Servico S= new Servico();
+        S.run();
         
     }
     

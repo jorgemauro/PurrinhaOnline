@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import static java.lang.Integer.parseInt;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -17,10 +18,10 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Voidk
+ * @author Jorge Mauro e Rafael
  */
 public class jogo {
-    List<jogador> jogadores =new ArrayList<>();
+     public List<jogador> jogadores =new ArrayList<>();
     int max;
     int conectados=0;
     int contplayer=0;
@@ -29,25 +30,31 @@ public class jogo {
     boolean terminou=true;
     int vencedorFim;
     
-    void addJogador(){
-        jogadores.add(new jogador());
-        this.conecta();
+    public void addJogador(Socket socket){
+        jogadores.add(new jogador(socket));
     }
-    jogo(int nJ){
+    /*
+    construtor do jogo
+    */
+   public jogo(int nJ,Socket socket){
         this.max=nJ*3;
         this.vencedores=new int[nJ]; 
         for(int i=0;i<nJ;i++){
             this.vencedores[i]=0;
-            this.addJogador();
+            this.addJogador(socket);
         }
     }
-    void conecta(){
+    /*
+    * verificar os jogadores conectados
+    *
+    */
+    public void conecta(){
         this.conectados++;
     }
-    boolean todosconectam(){
+    public boolean todosconectam(){
         return(this.conectados==jogadores.size());
     }
-    void apostas(){
+    public void apostas(){
         jogadores.forEach((j)->{
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             this.contplayer++;
@@ -68,12 +75,12 @@ public class jogo {
             }
         });
     }
-    void escolha(){
+    public void escolha(){
     jogadores.forEach((j)->{
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             this.contplayer++;
             try {
-                System.out.println("jogador "+ this.contplayer +" digite sua aposta de 0 a "+j.palitos);
+                System.out.println("jogador "+ this.contplayer +" digite quantos palitos você mostra de 0 a "+j.palitos);
                 int escolhido;
                 do{
                 String entrada = in.readLine();
@@ -85,7 +92,7 @@ public class jogo {
             }
         });
     }
-    void vencedoresRodada(){
+    public void vencedoresRodada(){
         String venc="os vencedores dessa rodada foram jogadores:";
         for(int i=0;i<vencedores.length;i++){
             if(vencedores[i]==1){
@@ -97,7 +104,7 @@ public class jogo {
         this.soma=0;
         System.out.println(venc);
     }
-    void rodada(){
+    public void rodada(){
         System.out.println("começou outra rodada");
         this.escolha();
         this.max=0;
@@ -111,7 +118,7 @@ public class jogo {
         this.vencedoresRodada();
         
     }
-    boolean temVencedor(){
+    public boolean temVencedor(){
         jogadores.forEach((j)->{
             if(j.getPalito()==0){
                 this.terminou=false;

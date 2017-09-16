@@ -6,6 +6,9 @@
 
 package purrinhabasico;
 
+import java.net.Socket;
+
+import java.io.IOException;
 /**
  *
  * @author Voidk
@@ -14,26 +17,33 @@ public class jogador {
  int palpite;
  int palitos;
  int escolha;
- jogador(){
+ Socket socket;
+ jogador(Socket s){
+     this.Conectar(s);
  this.palitos=3;
  }
- 
- void setpalpite(int p){
+public  void Conectar(Socket socket){
+  this.socket = socket;
+ }
+ public Socket getSocket(){
+     return this.socket;
+ }
+ public void setpalpite(int p){
      this.palpite=p;
  }
- int getPalpite(){
+ public int getPalpite(){
      return(this.palpite);
  }
- void menosPalito(){
+ public void menosPalito(){
     this.palitos--; 
  }
- int getPalito(){
+ public int getPalito(){
      return(this.palitos);
  }
- void setEscolho(int e){
+ public void setEscolho(int e){
      this.escolha=e;
  }
- int getescolha(){
+ public int getescolha(){
  return this.escolha;
          }
 }
