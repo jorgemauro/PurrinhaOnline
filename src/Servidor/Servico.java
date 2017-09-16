@@ -16,7 +16,7 @@ import java.net.ServerSocket;
  */
 public class Servico{
     public void run() throws IOException{
-     int porta = Integer.parseInt("4001");
+     int porta = Integer.parseInt("4005");
         ServerSocket listener = new ServerSocket(porta);
         try{
             while (true){

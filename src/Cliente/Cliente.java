@@ -28,14 +28,14 @@ public class Cliente {
     private JFrame frame = new JFrame("Purrinha");
     private JLabel mensagem = new JLabel("");
     //PEGAMOS A PORTA DO SERVIDOR
-    private static int porta = 4001;
+    private static int porta = 4005;
     private Socket socket;
     private BufferedReader entrada;
     private PrintWriter	saida;
     
     public Cliente() throws Exception {
         // CONFIGURAÇÃO DO SOCKET PARA CONEXÃO AO SERVIDOR
-        this.socket = new Socket("127.0.0.1", porta);
+        this.socket = new Socket("127.0.0.5", porta);
         this.entrada = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.saida = new PrintWriter(socket.getOutputStream(), true);
         this.mensagem.setBackground(Color.lightGray);

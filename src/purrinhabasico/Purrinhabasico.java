@@ -20,7 +20,11 @@ public class Purrinhabasico {
      */
     public static void main(String[] args) throws Exception {
         Servico S= new Servico();
+        Cliente C1 = new Cliente();
+        Cliente C2 = new Cliente();
         S.run();
+        C1.run();
+        C2.run();
         
     }
     
