@@ -17,6 +17,6 @@ public class IniciaCliente {
     public static void main(String[] args) throws UnknownHostException,
             IOException {
         // dispara cliente
-        new Cliente("127.0.0.1", 12345).executa();
+        new Cliente("127.0.0.1", 12346).executa();
     }
 }

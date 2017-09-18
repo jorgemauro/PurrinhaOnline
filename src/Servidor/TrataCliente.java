@@ -8,6 +8,8 @@ package Servidor;
 
 import java.io.InputStream;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,8 +25,32 @@ public class TrataCliente implements Runnable{
     }
    // do servidor com os clientes
     public void run() {
-        Scanner s = new Scanner(this.cliente);
-        
-        s.close();
+        if(this.servidor.Cont<this.servidor.MaxPlayers){
+        this.servidor.distribuiMensagem("esperando jogadores...");
+        try {
+            this.servidor.aguardando(this.servidor.Cont);
+        } catch (InterruptedException ex) {
+        this.servidor.distribuiMensagem("erro...");
+            Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        while(this.servidor.temVencedor()){
+        this.servidor.escolha(cliente);
+        this.servidor.distribuiMensagem("esperando jogadores...");
+            try {
+                this.servidor.aguardando(this.servidor.Cont);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        this.servidor.max=0;
+        this.servidor.jogadores.forEach((j)->{
+                    this.servidor.max+=j.getPalito();
+                    this.servidor.soma+=j.getescolha();
+                });
+            this.servidor.contplayer=0;
+            this.servidor.apostas(cliente);
+            this.servidor.contplayer=0;
+            this.servidor.vencedoresRodada();
+        }
     }
 }

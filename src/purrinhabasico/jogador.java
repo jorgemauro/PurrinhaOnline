@@ -13,20 +13,14 @@ import java.io.IOException;
  *
  * @author Voidk
  */
-public class jogador {
- int palpite;
- int palitos;
- int escolha;
- Socket socket;
- jogador(Socket s){
-     this.Conectar(s);
+public class jogador{
+ public int palpite;
+ public int palitos;
+ public int escolha;
+ public int id;
+ public jogador(int id){
+     this.id=id;
  this.palitos=3;
- }
-public  void Conectar(Socket socket){
-  this.socket = socket;
- }
- public Socket getSocket(){
-     return this.socket;
  }
  public void setpalpite(int p){
      this.palpite=p;

@@ -31,7 +31,7 @@ public class jogo {
     int vencedorFim;
     
     public void addJogador(Socket socket){
-        jogadores.add(new jogador(socket));
+        jogadores.add(new jogador());
     }
     /*
     construtor do jogo
