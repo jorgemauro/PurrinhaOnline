@@ -13,12 +13,12 @@ import java.io.IOException;
  *
  * @author Voidk
  */
-public class jogador{
+public class Jogador{
  public int palpite;
  public int palitos;
  public int escolha;
  public int id;
- public jogador(int id){
+ public Jogador(int id){
      this.id=id;
  this.palitos=3;
  }

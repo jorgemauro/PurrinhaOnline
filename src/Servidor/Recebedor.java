@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Servidor;
 
 import java.io.InputStream;
@@ -21,11 +20,9 @@ public class Recebedor implements Runnable {
         this.servidor = servidor;
     }
 
-    @Override
     public void run() {
-        // TODO Auto-generated method stub
+        // recebe msgs do servidor e imprime na tela
         Scanner s = new Scanner(this.servidor);
-
         while (s.hasNextLine()) {
             System.out.println(s.nextLine());
         }
