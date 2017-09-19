@@ -24,7 +24,7 @@ import purrinhabasico.jogo;
 
 /**
  *
- * @author Voidk
+ * @author Jorge Mauro e Rafael Tadeu
  */
 public class Servico{
     
@@ -51,10 +51,8 @@ public class Servico{
      ServerSocket servidor = new ServerSocket(this.porta);
      
      while (true) {
-            // aceita cliente e imprime cliente conectado
             Socket cliente = servidor.accept();
             
-            // adiciona saida do cliente a lista
        PrintStream ps = new PrintStream(cliente.getOutputStream());
             this.clientes.add(ps);
             this.jogadores.add(new jogador(this.Cont));
@@ -71,36 +69,8 @@ public class Servico{
             cliente.println(msg);
         });
             }
-    public void apostas(InputStream c){
-        System.out.print(this.contplayer);
-        this.clientes.stream().forEach((j)->{
-                j.println("jogador "+(this.jogadores.get(this.contplayer).id +1) +" digite sua aposta de 0 a "+this.max);
-                int apostando;
-                do{
-                Scanner s = new Scanner(c);
-                apostando=parseInt(s.nextLine());
-                }while(apostando<0&&apostando>this.max);
-                this.jogadores.get(contplayer).setpalpite(apostando);
-                if(apostando==this.soma){
-                this.vencedores[contplayer]=1;
-                this.jogadores.get(contplayer).menosPalito();
-                }
-                this.contplayer++;
-        });
-    }
-    public  void escolha(InputStream c){
-    this.clientes.stream().forEach((j)->{
-                j.println("jogador "+ (this.jogadores.get(this.contplayer).id +1) +" digite quantos palitos você mostra de 0 a "+this.jogadores.get(this.contplayer).palitos);
-                int escolhido;
-                do{
-                Scanner s = new Scanner(c);
-                escolhido=parseInt(s.nextLine());
-                }while(escolhido<0 || escolhido>this.jogadores.get(contplayer).palitos);
-                this.jogadores.get(contplayer).setEscolho(escolhido);
-                    this.contplayer++;
-     
-     });
-    }
+  
+   
     public void vencedoresRodada(){
         String venc="os vencedores dessa rodada foram jogadores:";
         for(int i=0;i<vencedores.length;i++){

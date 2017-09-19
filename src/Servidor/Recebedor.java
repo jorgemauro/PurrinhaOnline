@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author Voidk
+ * @author Jorge Mauro e Rafael Tadeu
  */
 public class Recebedor implements Runnable {
 
@@ -23,7 +23,6 @@ public class Recebedor implements Runnable {
 
     @Override
     public void run() {
-        // TODO Auto-generated method stub
         Scanner s = new Scanner(this.servidor);
 
         while (s.hasNextLine()) {

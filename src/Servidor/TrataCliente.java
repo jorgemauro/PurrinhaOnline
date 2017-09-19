@@ -29,9 +29,8 @@ public class TrataCliente implements Runnable {
         this.falaCliente = falaCliente;
    }
 
-    // do servidor com os clientes
+    //run de comunicacao servidor/cliente
     public synchronized void run() {
-        // verifica se há um vencedor geral
         this.servidor.distribuiMensagem("aguarde ps proximos jogadores");
         if (this.AllResponses()) {
             try {
@@ -47,6 +46,7 @@ public class TrataCliente implements Runnable {
         }
 
         this.servidor.contplayer = 0;
+        // verifica se há um vencedor geral
         while (this.servidor.NtemVencedor()) {
             this.servidor.distribuiMensagem("começou a rodada");
             this.servidor.distribuiMensagem("Digite quantos palitos você mostra de 0 a " + this.servidor.jogadores.get((this.servidor.contplayer)).palitos);
@@ -72,6 +72,7 @@ public class TrataCliente implements Runnable {
 
             this.servidor.contplayer = 0;
             this.servidor.max = 0;
+            //faz a soma dos palitos escolhidos e determina o maximo pra escolha
             this.servidor.jogadores.forEach((j) -> {
                 this.servidor.max += j.getPalito();
                 this.servidor.soma += j.getescolha();
@@ -92,8 +93,6 @@ public class TrataCliente implements Runnable {
     }
 
     public boolean AllResponses() {
-        this.servidor.distribuiMensagem("cont player" + this.servidor.contplayer + " max" + this.servidor.MaxPlayers);
-
         return (this.servidor.contplayer != this.servidor.MaxPlayers);
 }
 }

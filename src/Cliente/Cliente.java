@@ -21,11 +21,9 @@ public class Cliente extends Thread {
      Socket cliente = new Socket(this.host, this.porta);
      System.out.println("O cliente se conectou ao servidor!");
  
-     // thread para receber mensagens do servidor
      Recebedor r = new Recebedor(cliente.getInputStream());
      new Thread(r).start();
      
-     // lê msgs do teclado e manda pro servidor
      Scanner teclado = new Scanner(System.in);
      PrintStream saida = new PrintStream(cliente.getOutputStream());
      while (teclado.hasNextLine()) {
