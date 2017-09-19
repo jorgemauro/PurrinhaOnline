@@ -5,80 +5,70 @@
  */
 package Servidor;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import java.net.Socket;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import purrinhabasico.Jogador;
 
 /**
  *
- * @author Voidk
+ * @author Jorge e Rafa
  */
 public class TrataCliente implements Runnable {
 
+    private InputStream cliente;
+    PrintStream falaCliente;
    private Servico servidor;
-    private Socket cliente;
     boolean escolha = true;
  
-   public TrataCliente(InputStream cliente, Servico servidor) {
+    public TrataCliente(InputStream cliente, Servico servidor, PrintStream falaCliente) {
      this.cliente = cliente;
      this.servidor = servidor;
+        this.falaCliente = falaCliente;
    }
- 
-    @Override
-   public synchronized void run() {
+
+    // do servidor com os clientes
+    public synchronized void run() {
         // verifica se há um vencedor geral
-        PrintStream ps = new PrintStream(cliente.getOutputStream());
-                ps.println("Esperando outros Jogadores");
+        this.servidor.distribuiMensagem("aguarde ps proximos jogadores");
         if (this.AllResponses()) {
-           try {
+            try {
                 this.servidor.contplayer++;
-              this.wait();
-       } catch (InterruptedException ex) {
-           Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
-       }
+                this.wait();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             this.servidor.contplayer++;
             this.notifyAll();
-
-       }
+       
+        }
 
         this.servidor.contplayer = 0;
         while (this.servidor.NtemVencedor()) {
-            this.falaCliente.println("começou a rodada"+this.cliente);
-            this.falaCliente.println("Digite quantos palitos você mostra de 0 a " + this.servidor.jogadores.get((this.servidor.contplayer)).palitos);
+            this.servidor.distribuiMensagem("começou a rodada");
+            this.servidor.distribuiMensagem("Digite quantos palitos você mostra de 0 a " + this.servidor.jogadores.get((this.servidor.contplayer)).palitos);
             int escolhido;
             do {
-                Scanner s = null;
-                try {
-                    s = new Scanner(this.cliente.getInputStream());
-                } catch (IOException ex) {
-                    Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
-     }
+     Scanner s = new Scanner(this.cliente);
                 escolhido = parseInt(s.nextLine());
             } while (escolhido < 0 || escolhido > this.servidor.jogadores.get(this.servidor.contplayer).palitos);
             this.servidor.jogadores.get(this.servidor.contplayer).setEscolho(escolhido);
             if (this.AllResponses()) {
                 this.servidor.contplayer++;
-                try {
+           try {
                     
-            this.servidor.distribuiMensagem("parada");
-                    this.wait();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
-   }
+               this.wait();
+           } catch (InterruptedException ex) {
+               Logger.getLogger(TrataCliente.class.getName()).log(Level.SEVERE, null, ex);
+           }
             } else {
                 this.servidor.contplayer++;
-                this.notifyAll();
+           this.notifyAll();
 
-}
+       }
 
             this.servidor.contplayer = 0;
             this.servidor.max = 0;
@@ -87,13 +77,23 @@ public class TrataCliente implements Runnable {
                 this.servidor.soma += j.getescolha();
             });
             this.servidor.distribuiMensagem("jogador " + this.servidor.contplayer + " digite sua aposta de 0 a " + this.servidor.max);
-            
-        }
+            int apostando;
+                do{
+                Scanner s = new Scanner(this.cliente);
+                apostando=parseInt(s.nextLine());
+                }while(apostando<0&&apostando>this.servidor.max);
+                this.servidor.jogadores.get(this.servidor.contplayer).setpalpite(apostando);
+                if(apostando==this.servidor.soma){
+                this.servidor.vencedores[this.servidor.contplayer]=1;
+                this.servidor.jogadores.get(this.servidor.contplayer).menosPalito();
+                }
+                this.servidor.contplayer++;
+   }  
     }
 
     public boolean AllResponses() {
         this.servidor.distribuiMensagem("cont player" + this.servidor.contplayer + " max" + this.servidor.MaxPlayers);
 
         return (this.servidor.contplayer != this.servidor.MaxPlayers);
-    }
+}
 }

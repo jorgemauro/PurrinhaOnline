@@ -30,8 +30,8 @@ public class jogo {
     boolean terminou=true;
     int vencedorFim;
     
-    public void addJogador(Socket socket){
-        jogadores.add(new jogador());
+    public void addJogador(int i){
+        jogadores.add(new jogador(i));
     }
     /*
     construtor do jogo
@@ -41,7 +41,7 @@ public class jogo {
         this.vencedores=new int[nJ]; 
         for(int i=0;i<nJ;i++){
             this.vencedores[i]=0;
-            this.addJogador(socket);
+            this.addJogador(i);
         }
     }
     /*

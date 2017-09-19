@@ -14,6 +14,6 @@ import java.io.IOException;
  */
 public class IniciaServico {
     public static void main(String[] args) throws IOException {
-        new Servico(12345).executa();
+        new Servico(12346).executa();
     }
 }

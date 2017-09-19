@@ -6,11 +6,8 @@
 
 package Cliente;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.UnknownHostException;
-import java.util.Scanner;
 
 /**
  *
@@ -19,6 +16,7 @@ import java.util.Scanner;
 public class IniciaCliente {
     public static void main(String[] args) throws UnknownHostException,
             IOException {
+        // dispara cliente
         new Cliente("127.0.0.1", 12346).executa();
     }
 }

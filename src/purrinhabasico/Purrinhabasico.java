@@ -6,7 +6,6 @@
 
 package purrinhabasico;
 
-import Cliente.Cliente;
 import Servidor.Servico;
 
 /**
